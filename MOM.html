@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Special Gift Login</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 380px;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      background: #e63946;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .hidden { display: none; }
+
+    .gift-box {
+      width: 120px;
+      height: 120px;
+      background: #ff4d6d;
+      margin: 20px auto;
+      border-radius: 10px;
+      position: relative;
+      cursor: pointer;
+      animation: bounce 1s infinite;
+    }
+
+    .gift-box::before {
+      content: "🎁";
+      font-size: 70px;
+      position: absolute;
+      top: 20px;
+      left: 25px;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .heart {
+      font-size: 100px;
+      color: red;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    .flower {
+      position: absolute;
+      top: -50px;
+      font-size: 25px;
+      animation: fall 6s linear infinite;
+      color: red;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(110vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="loginPage">
+    <h2>Login Here 💖</h2>
+    <input type="text" id="fullName" placeholder="Enter Full Name" />
+    <input type="password" id="fruitPassword" placeholder="Favourite Fruit" />
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div class="container hidden" id="giftPage">
+    <h2>Welcome My Dear 💕</h2>
+    <div class="gift-box" onclick="showLoveInput()"></div>
+    <div id="loverInput" class="hidden">
+      <p style="color:#e63946;font-weight:bold;">💌 Ingiza jina la mpenzi wako ili gift ifunguke 💖</p>
+      <input type="text" id="loverName" placeholder="Enter your lover's name" />
+      <button onclick="openGift()">Open Gift</button>
+    </div>
+  </div>
+
+  <div class="container hidden" id="lovePage">
+    <div class="heart">❤️<div style="font-size:28px;margin-top:10px;animation:pulse 1s infinite;">I Love You 💖</div></div>
+    <h2 id="nameDisplay"></h2>
+  </div>
+
+  <script>
+    function login() {
+      const name = document.getElementById('fullName').value.trim();
+      const password = document.getElementById('fruitPassword').value.trim();
+
+      if (name === '') {
+        alert('Tafadhali ingiza full name');
+        return;
+      }
+
+      const validFruits = ['apple','mango','orange','banana','grapes','watermelon','pineapple','strawberry','avocado'];
+
+      if (password === '' || !validFruits.includes(password.toLowerCase())) {
+        alert('Lazima uweke jina la tunda unalolipenda mfano: mango, apple, banana 🍎🍌');
+        return;
+      }
+
+      document.getElementById('loginPage').classList.add('hidden');
+      document.getElementById('giftPage').classList.remove('hidden');
+    }
+
+    function showLoveInput() {
+      document.getElementById('loverInput').classList.remove('hidden');
+    }
+
+    function openGift() {
+      const lover = document.getElementById('loverName').value.trim();
+
+      if (lover === '') {
+        alert('Tafadhali ingiza jina la mpenzi wako 💖');
+        return;
+      }
+
+      document.getElementById('giftPage').classList.add('hidden');
+      document.getElementById('lovePage').classList.remove('hidden');
+      document.getElementById('nameDisplay').innerText = lover + ' ❤️';
+
+      const symbols = ['💋', '❤️', '🌹', '🌺', '💕', '💖'];
+
+      for (let i = 0; i < 30; i++) {
+        const item = document.createElement('div');
+        item.className = 'flower';
+        item.innerHTML = symbols[Math.floor(Math.random() * symbols.length)] + ' ' + lover;
+        item.style.left = Math.random() * window.innerWidth + 'px';
+        item.style.animationDuration = (4 + Math.random() * 4) + 's';
+        item.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+        document.body.appendChild(item);
+      }
+    }
+  </script>
+</body>
+</html>
