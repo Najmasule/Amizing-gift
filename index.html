@@ -100,6 +100,21 @@
       color: red;
     }
 
+    .logout-btn {
+      background: #ff6b9d;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 20px;
+      box-shadow: 0 4px 10px rgba(255,107,157,0.3);
+      transition: transform 0.2s;
+    }
+
+    .logout-btn:hover {
+      transform: scale(1.05);
+    }
+
     @keyframes fall {
       0% { transform: translateY(0); opacity: 1; }
       100% { transform: translateY(110vh); opacity: 0; }
@@ -128,6 +143,7 @@
   <div class="container hidden" id="lovePage">
     <div class="heart">❤️<div style="font-size:28px;margin-top:10px;animation:pulse 1s infinite;">I Love You 💖</div></div>
     <h2 id="nameDisplay"></h2>
+    <button onclick="logout()" class="logout-btn">🏠 Home 💕</button>
   </div>
 
   <script>
@@ -176,6 +192,25 @@
         item.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
         document.body.appendChild(item);
       }
+    }
+
+    function logout() {
+      // Hide current pages, show login
+      document.getElementById('giftPage').classList.add('hidden');
+      document.getElementById('lovePage').classList.add('hidden');
+      document.getElementById('loginPage').classList.remove('hidden');
+      
+      // Clear all inputs
+      document.getElementById('fullName').value = '';
+      document.getElementById('fruitPassword').value = '';
+      document.getElementById('loverName').value = '';
+      
+      // Clear name display
+      document.getElementById('nameDisplay').innerText = '';
+      
+      // Remove falling flowers
+      const flowers = document.querySelectorAll('.flower');
+      flowers.forEach(flower => flower.remove());
     }
   </script>
 </body>
